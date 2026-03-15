@@ -1,0 +1,21 @@
+name: Metrics
+on:
+  # Обновлять каждые 24 часа
+  schedule: [{cron: "0 0 * * *"}]
+  # Позволяет запускать вручную
+  workflow_dispatch:
+  # Обновлять при пуше в main ветку (измените main на master если у вас так)
+  push: {branches: ["master", "main"]}
+jobs:
+  github-metrics:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: lowlighter/metrics@latest
+        with:
+          filename: metrics.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          base: ""
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
